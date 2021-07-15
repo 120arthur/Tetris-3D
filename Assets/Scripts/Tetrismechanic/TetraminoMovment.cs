@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using Context;
+using Tetrismechanic;
 using UnityEngine;
 
 public class TetraminoMovment : MonoBehaviour
@@ -13,8 +14,7 @@ public class TetraminoMovment : MonoBehaviour
 
     [SerializeField] private GameObject parentAnchor;
 
-    private readonly SoundController _soundControllerInstance = SoundController.SoundControllerInstance;
-    private readonly GameManager _gameManagerInstance = GameManager.GameManagerInstance;
+    private SoundController _soundControllerInstance;
     private TetraminoGrid _tetraminoGridInstance;
 
     private void Awake()
@@ -24,6 +24,7 @@ public class TetraminoMovment : MonoBehaviour
 
     private void Start()
     {
+        _soundControllerInstance = SoundController.SoundControllerInstance;
         SetVelocity();
         _currentSpeed = normalSpeed;
         StartCoroutine(TetraminoFall());
@@ -110,15 +111,15 @@ public class TetraminoMovment : MonoBehaviour
     // When tetramino is instantiated, this function changes the speed based on the score.
     private void SetVelocity()
     {
-        if (_gameManagerInstance.Score.CurrentPoints() > 700)
+        if (ContextProvider.Context.gameManager.Score.CurrentPoints() > 700)
         {
             normalSpeed /= 3;
         }
-        else if (_gameManagerInstance.Score.CurrentPoints() >= 1200)
+        else if (ContextProvider.Context.gameManager.Score.CurrentPoints() >= 1200)
         {
             normalSpeed /= 2;
         }
-        else if (_gameManagerInstance.Score.CurrentPoints() >= 1700)
+        else if (ContextProvider.Context.gameManager.Score.CurrentPoints() >= 1700)
         {
             normalSpeed /= 1f;
         }

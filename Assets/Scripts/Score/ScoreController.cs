@@ -12,6 +12,7 @@ public class ScoreController : MonoBehaviour, IScore
     public void AddPoints()
     {
         _totalScore += 100;
+        
     } 
     public void RewardPoints()
     {

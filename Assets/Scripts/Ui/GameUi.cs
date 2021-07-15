@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Context;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -13,22 +14,15 @@ public class GameUi : Ui
 
     [Header("Reward")] [SerializeField] private GameObject congratsPanel;
 
-    private GameManager _gameManagerInstance;
-
-    private void Start()
-    {
-        _gameManagerInstance = GameManager.GameManagerInstance;
-    }
-
     public void UpdateHudScore()
     {
-        scoreText.text = _gameManagerInstance.Score.CurrentPoints().ToString();
+        scoreText.text = ContextProvider.Context.gameManager.Score.CurrentPoints().ToString();
     }
 
     // Updates game over panel points
     private void UpdateTotalScore()
     {
-        totalScore.text = _gameManagerInstance.Score.CurrentPoints().ToString();
+        totalScore.text = ContextProvider.Context.gameManager.Score.CurrentPoints().ToString();
     }
 
     #region PanelsActivateAndDeactivate
@@ -53,13 +47,13 @@ public class GameUi : Ui
     public void CongratsIn()
     {
         TurnOnUi(congratsPanel);
-        _gameManagerInstance.PauseGameToggle(true);
+        ContextProvider.Context.gameManager.PauseGameToggle(true);
     }
 
     public void CongratsOut()
     {
         TurnOffUi(congratsPanel);
-        _gameManagerInstance.PauseGameToggle(false);
+        ContextProvider.Context.gameManager.PauseGameToggle(false);
     }
 
     #endregion
