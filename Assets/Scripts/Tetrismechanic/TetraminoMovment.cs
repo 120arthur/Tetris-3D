@@ -15,7 +15,7 @@ public class TetraminoMovment : MonoBehaviour
     [SerializeField] private GameObject parentAnchor;
 
     private SoundController _soundControllerInstance;
-    private TetraminoGrid _tetraminoGridInstance;
+    private ITetraminoGrid _tetraminoGridInstance;
 
     private void Awake()
     {
@@ -111,15 +111,15 @@ public class TetraminoMovment : MonoBehaviour
     // When tetramino is instantiated, this function changes the speed based on the score.
     private void SetVelocity()
     {
-        if (ContextProvider.Context.gameManager.Score.CurrentPoints() > 700)
+        if (ContextProvider.Context.Score.CurrentPoints() > 700)
         {
             normalSpeed /= 3;
         }
-        else if (ContextProvider.Context.gameManager.Score.CurrentPoints() >= 1200)
+        else if (ContextProvider.Context.Score.CurrentPoints() >= 1200)
         {
             normalSpeed /= 2;
         }
-        else if (ContextProvider.Context.gameManager.Score.CurrentPoints() >= 1700)
+        else if (ContextProvider.Context.Score.CurrentPoints() >= 1700)
         {
             normalSpeed /= 1f;
         }

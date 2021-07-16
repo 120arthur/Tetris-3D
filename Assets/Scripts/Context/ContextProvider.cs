@@ -4,17 +4,18 @@ namespace Context
 {
     public static class ContextProvider
     {
-        public static Context Context { get; private set; }
+        public static IContext Context { get; private set; }
 
-        public static void Subscribe(Context context)
+        public static void Subscribe(IContext context)
         {
-            if (context != null)
+          /*if (Context != null)
             {
                 return;
             }
-
+            */
             Context = context;
         }
         
+
     }
 }

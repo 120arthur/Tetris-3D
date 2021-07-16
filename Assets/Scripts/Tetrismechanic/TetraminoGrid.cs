@@ -7,7 +7,7 @@ namespace Tetrismechanic
     /// <summary>
     /// Control tetramino on the grid.
     /// </summary>
-    public class TetraminoGrid : MonoBehaviour
+    public class TetraminoGrid : MonoBehaviour, ITetraminoGrid
     {
         private const int Height = GameManager.Height;
         private const int Width = GameManager.Width;
@@ -18,7 +18,7 @@ namespace Tetrismechanic
         private void Start()
         {
             _soundControllerInstance  = SoundController.SoundControllerInstance;
-            _grid = ContextProvider.Context.gameManager.Grid;
+            _grid = ContextProvider.Context.GameManager.Grid;
         }
 
         #region TetrisSystem
@@ -45,6 +45,7 @@ namespace Tetrismechanic
         // when the tetromino finishes the move, this method adds its position on the grid. 
         public void AddTetrisToPositionList()
         {
+            print("add");
             foreach (Transform children in transform)
             {
                 var position = children.transform.position;
@@ -52,11 +53,12 @@ namespace Tetrismechanic
 
                 if (Mathf.RoundToInt(position.y) == Height - 3)
                 {
-                    ContextProvider.Context.gameManager.EndGame();
+                    ContextProvider.Context.GameManager.EndGame();
                 }
             }
 
-            if (ContextProvider.Context.gameManager.gameIsOver) return;
+            print(ContextProvider.Context.GameManager.gameIsOver);
+            if (ContextProvider.Context.GameManager.gameIsOver) return;
             TetrisSpawner.TetrisSpawnerInstance.SpawnTetris();
             _soundControllerInstance.ChangeSfx(1);
             _soundControllerInstance.PlaySfx();
@@ -72,7 +74,7 @@ namespace Tetrismechanic
             }
         }
 
-        private bool IsLineFull(int line)
+        public bool IsLineFull(int line)
         {
             var wordChar = new List<char>();
             for (var column = 0; column < Width; column++)
@@ -89,9 +91,9 @@ namespace Tetrismechanic
                 }
             }
 
-            if (ContextProvider.Context.gameManager.MatchWords.VerifyMatch(wordChar))
+            if (ContextProvider.Context.MatchWords.VerifyMatch(wordChar))
             {
-                ContextProvider.Context.gameManager.RewardChallenge();
+                ContextProvider.Context.GameManager.RewardChallenge();
                 wordChar.Clear();
             }
 
@@ -99,7 +101,7 @@ namespace Tetrismechanic
             return true;
         }
 
-        private void RemoveLine(int lineToRemove)
+        public void RemoveLine(int lineToRemove)
         {
             for (var column = 0; column < Width; column++)
             {
@@ -109,14 +111,14 @@ namespace Tetrismechanic
                 _grid[column, lineToRemove] = null;
             }
 
-            ContextProvider.Context.gameManager.Score.AddPoints();
-            ContextProvider.Context.gameUi.UpdateHudScore();
+            ContextProvider.Context.Score.AddPoints();
+            ContextProvider.Context.GameManager.GameUi.UpdateHudScore();
             _soundControllerInstance.ChangeSfx(3);
             _soundControllerInstance.PlaySfx();
         }
 
         //when a row is deleted, this method brings down all the tretamino blocks above it.
-        private void UpdateBlockLinesDown(int deletedLine)
+        public void UpdateBlockLinesDown(int deletedLine)
         {
             for (var line = deletedLine; line < Height; line++)
             {

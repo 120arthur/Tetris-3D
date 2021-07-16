@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     // These variables define the height and width of the tetris grid.
     public const int Height = 25;
     public const int Width = 10;
@@ -11,14 +10,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool gameIsOver;
 
-    public IScore Score;
-    public IMatchWords MatchWords;
-
-    private void Awake()
-    {
-        Score = GetComponent<IScore>();
-        MatchWords = GetComponent<IMatchWords>();
-    }
+    public GameUi GameUi;
 
     private void Start()
     {
@@ -41,7 +33,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameIsOver = true;
-        ContextProvider.Context.gameUi.GameOverPanelIn();
+        GameUi.GameOverPanelIn();
         SoundController.SoundControllerInstance.ChangeSfx(2);
         SoundController.SoundControllerInstance.PlaySfx();
     }
@@ -51,7 +43,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RewardChallenge()
     {
-        ContextProvider.Context.gameUi.CongratsIn();
-        Score.RewardPoints();
+        GameUi.CongratsIn();
+        ContextProvider.Context.Score.RewardPoints();
     }
 }

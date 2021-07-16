@@ -2322,11 +2322,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad028436edb64cab8007a1e36c377bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 7287736040811374107}
-  totalScore: {fileID: 7287736042176981415}
-  gameOverPanel: {fileID: 7287736041785887080}
-  pausePanel: {fileID: 7287736040138976649}
-  congratsPanel: {fileID: 7140336505930842038}
+  _scoreText: {fileID: 7287736040811374107}
+  _totalScore: {fileID: 7287736042176981415}
+  _gameOverPanel: {fileID: 7287736041785887080}
+  _pausePanel: {fileID: 7287736040138976649}
+  _congratsPanel: {fileID: 7140336505930842038}
 --- !u!1 &7287736041381105409
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,22 +1,30 @@
+using System;
+using Score;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
 namespace Context
 {
-    public class Context : MonoBehaviour
+    public class Context : IContext
     {
-        public AssetLoader assetloader { get; }
-        public GameManager gameManager { get; }
-        public GameUi gameUi { get; }
+        public AssetLoader AssetLoader { get; }
+        public GameManager GameManager { get; }
+        public IScore Score { get; }
+        public IMatchWords MatchWords { get; }
+        public WordsScriptable WordsScriptable { get; }
 
         public Context()
         {
             ContextProvider.Subscribe(this);
 
-            assetloader = new AssetLoader();
-            gameUi = assetloader.LoadAndInstantiate<GameUi>($"Managers/{nameof(gameUi)}");
-            gameManager = assetloader.LoadAndInstantiate<GameManager>($"Managers/{nameof(gameManager)}");
+            AssetLoader = new AssetLoader();
+            
+            GameManager = AssetLoader.LoadAndInstantiate<GameManager>($"Managers/{nameof(GameManager)}");
+            
+            WordsScriptable = AssetLoader.Load<WordsScriptable>($"WordSetting/{nameof(WordsScriptable)}");
 
+            Score = new ScoreController();
+            MatchWords = new MatchWords(WordsScriptable.word);
         }
     }
 }
