@@ -1,8 +1,5 @@
-using System;
 using Score;
-using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-
+using Tetrismechanic;
 namespace Context
 {
     public class Context : IContext
@@ -12,6 +9,7 @@ namespace Context
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }
         public WordsScriptable WordsScriptable { get; }
+        public  ITetraminoGrid TetraminoGrid { get; }
 
         public Context()
         {
@@ -25,6 +23,7 @@ namespace Context
 
             Score = new ScoreController();
             MatchWords = new MatchWords(WordsScriptable.word);
+            TetraminoGrid = new TetraminoGrid();
         }
     }
 }

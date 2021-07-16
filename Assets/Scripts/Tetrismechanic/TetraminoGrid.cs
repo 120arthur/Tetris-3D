@@ -15,7 +15,7 @@ namespace Tetrismechanic
         
         private SoundController _soundControllerInstance;
 
-        private void Start()
+        public TetraminoGrid()
         {
             _soundControllerInstance  = SoundController.SoundControllerInstance;
             _grid = ContextProvider.Context.GameManager.Grid;
@@ -24,9 +24,9 @@ namespace Tetrismechanic
         #region TetrisSystem
 
         // Verify if tetramino position is valid 
-        public bool ThisPositionIsValid()
+        public bool ThisPositionIsValid(Transform tetramino)
         {
-            foreach (Transform children in transform)
+            foreach (Transform children in tetramino)
             {
                 var position = children.transform.position;
                 var roundedX = Mathf.RoundToInt(position.x);
@@ -43,10 +43,9 @@ namespace Tetrismechanic
         }
 
         // when the tetromino finishes the move, this method adds its position on the grid. 
-        public void AddTetrisToPositionList()
+        public void AddTetrisToPositionList(Transform tetramino)
         {
-            print("add");
-            foreach (Transform children in transform)
+            foreach (Transform children in tetramino)
             {
                 var position = children.transform.position;
                 _grid[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)] = children;
@@ -56,8 +55,7 @@ namespace Tetrismechanic
                     ContextProvider.Context.GameManager.EndGame();
                 }
             }
-
-            print(ContextProvider.Context.GameManager.gameIsOver);
+            
             if (ContextProvider.Context.GameManager.gameIsOver) return;
             TetrisSpawner.TetrisSpawnerInstance.SpawnTetris();
             _soundControllerInstance.ChangeSfx(1);
@@ -112,7 +110,7 @@ namespace Tetrismechanic
             }
 
             ContextProvider.Context.Score.AddPoints();
-            ContextProvider.Context.GameManager.GameUi.UpdateHudScore();
+            ContextProvider.Context.GameManager.gameUi.UpdateHudScore();
             _soundControllerInstance.ChangeSfx(3);
             _soundControllerInstance.PlaySfx();
         }

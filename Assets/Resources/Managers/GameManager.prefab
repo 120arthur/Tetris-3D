@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameIsOver: 0
-  GameUi: {fileID: 1379572120153825251}
+  gameUi: {fileID: 1379572120153825251}
 --- !u!1001 &7517331963520145697
 PrefabInstance:
   m_ObjectHideFlags: 0

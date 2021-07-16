@@ -1,4 +1,5 @@
 using Context;
+using Tetrismechanic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool gameIsOver;
 
-    public GameUi GameUi;
+    public GameUi gameUi;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         gameIsOver = true;
-        GameUi.GameOverPanelIn();
+        gameUi.GameOverPanelIn();
         SoundController.SoundControllerInstance.ChangeSfx(2);
         SoundController.SoundControllerInstance.PlaySfx();
     }
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RewardChallenge()
     {
-        GameUi.CongratsIn();
+        gameUi.CongratsIn();
         ContextProvider.Context.Score.RewardPoints();
     }
 }

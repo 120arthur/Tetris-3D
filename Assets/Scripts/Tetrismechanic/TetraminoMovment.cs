@@ -17,13 +17,9 @@ public class TetraminoMovment : MonoBehaviour
     private SoundController _soundControllerInstance;
     private ITetraminoGrid _tetraminoGridInstance;
 
-    private void Awake()
-    {
-        _tetraminoGridInstance = GetComponent<TetraminoGrid>();
-    }
-
     private void Start()
     {
+        _tetraminoGridInstance = ContextProvider.Context.TetraminoGrid;
         _soundControllerInstance = SoundController.SoundControllerInstance;
         SetVelocity();
         _currentSpeed = normalSpeed;
@@ -42,7 +38,7 @@ public class TetraminoMovment : MonoBehaviour
 
         transform.position += Vector3.down;
         // When the grid position is invalid the tetramino returns to the viewing position.
-        if (_tetraminoGridInstance.ThisPositionIsValid() == false)
+        if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
         {
             TetraminoBeat();
         }
@@ -55,7 +51,7 @@ public class TetraminoMovment : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             transform.Rotate(0, 0, -90);
-            if (_tetraminoGridInstance.ThisPositionIsValid() == false)
+            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
             {
                 transform.Rotate(0, 0, 90);
             }
@@ -63,7 +59,7 @@ public class TetraminoMovment : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Move(Vector3.left, parentAnchor.transform);
-            if (_tetraminoGridInstance.ThisPositionIsValid() == false)
+            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
             {
                 Move(-Vector3.left, parentAnchor.transform);
             }
@@ -71,7 +67,7 @@ public class TetraminoMovment : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Move(Vector3.right, parentAnchor.transform);
-            if (_tetraminoGridInstance.ThisPositionIsValid() == false)
+            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
             {
                 Move(-Vector3.right, parentAnchor.transform);
             }
@@ -103,7 +99,7 @@ public class TetraminoMovment : MonoBehaviour
     {
         _canMove = false;
         Move(Vector3.up, transform);
-        _tetraminoGridInstance.AddTetrisToPositionList();
+        _tetraminoGridInstance.AddTetrisToPositionList(gameObject.transform);
         _tetraminoGridInstance.SearchForFullLines();
         enabled = false;
     }

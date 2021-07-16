@@ -1,3 +1,5 @@
+using Tetrismechanic;
+
 namespace Context
 {
     public interface IContext 
@@ -6,6 +8,7 @@ namespace Context
         public GameManager GameManager { get; }
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }  
+        public  ITetraminoGrid TetraminoGrid { get; }
     
     }
 }

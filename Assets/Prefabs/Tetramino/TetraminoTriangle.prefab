@@ -595,7 +595,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 317354813166701683}
-  - component: {fileID: 3343873046637359491}
   - component: {fileID: 3727433812201100864}
   m_Layer: 0
   m_Name: Triangle
@@ -622,18 +621,6 @@ Transform:
   m_Father: {fileID: 5628033248572231850}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3343873046637359491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8120238068418898030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac8a9ca40c24f94ab428465476d7e63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3727433812201100864
 MonoBehaviour:
   m_ObjectHideFlags: 0
