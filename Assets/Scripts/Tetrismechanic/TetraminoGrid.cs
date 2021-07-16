@@ -9,38 +9,18 @@ namespace Tetrismechanic
     /// </summary>
     public class TetraminoGrid : MonoBehaviour, ITetraminoGrid
     {
-        private const int Height = GameManager.Height;
-        private const int Width = GameManager.Width;
-        private static Transform[,] _grid;
-        
-        private SoundController _soundControllerInstance;
+        private int _height;
+        private int _width;
+        private Transform[,] _grid;
 
-        public TetraminoGrid()
+        public TetraminoGrid(int height, int width, Transform[,] grid)
         {
-            _soundControllerInstance  = SoundController.SoundControllerInstance;
-            _grid = ContextProvider.Context.GameManager.Grid;
+            _height = height;
+            _width = width;
+            _grid = grid;
         }
 
         #region TetrisSystem
-
-        // Verify if tetramino position is valid 
-        public bool ThisPositionIsValid(Transform tetramino)
-        {
-            foreach (Transform children in tetramino)
-            {
-                var position = children.transform.position;
-                var roundedX = Mathf.RoundToInt(position.x);
-                var roundedY = Mathf.RoundToInt(position.y);
-
-                if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height ||
-                    _grid[roundedX, roundedY] != null)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
         // when the tetromino finishes the move, this method adds its position on the grid. 
         public void AddTetrisToPositionList(Transform tetramino)
@@ -49,78 +29,27 @@ namespace Tetrismechanic
             {
                 var position = children.transform.position;
                 _grid[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)] = children;
-
-                if (Mathf.RoundToInt(position.y) == Height - 3)
-                {
-                    ContextProvider.Context.GameManager.EndGame();
-                }
-            }
-            
-            if (ContextProvider.Context.GameManager.gameIsOver) return;
-            TetrisSpawner.TetrisSpawnerInstance.SpawnTetris();
-            _soundControllerInstance.ChangeSfx(1);
-            _soundControllerInstance.PlaySfx();
-        }
-
-        public void SearchForFullLines()
-        {
-            for (var line = Height - 1; line >= 0; line--)
-            {
-                if (!IsLineFull(line)) continue;
-                RemoveLine(line);
-                UpdateBlockLinesDown(line);
             }
         }
 
-        public bool IsLineFull(int line)
+        public void Remove(int lineToRemove)
         {
-            var wordChar = new List<char>();
-            for (var column = 0; column < Width; column++)
-            {
-                if (_grid[column, line] == null)
-                {
-                    return false;
-                }
-
-                if (!_grid[column, line].CompareTag("Untagged"))
-                {
-                    var letterTag = _grid[column, line].tag;
-                    wordChar.Add(letterTag[0]);
-                }
-            }
-
-            if (ContextProvider.Context.MatchWords.VerifyMatch(wordChar))
-            {
-                ContextProvider.Context.GameManager.RewardChallenge();
-                wordChar.Clear();
-            }
-
-
-            return true;
-        }
-
-        public void RemoveLine(int lineToRemove)
-        {
-            for (var column = 0; column < Width; column++)
+            for (var column = 0; column < _width; column++)
             {
                 if (_grid[column, lineToRemove])
+                {
                     Destroy(_grid[column, lineToRemove].gameObject);
-
-                _grid[column, lineToRemove] = null;
+                    _grid[column, lineToRemove] = null;
+                }
             }
-
-            ContextProvider.Context.Score.AddPoints();
-            ContextProvider.Context.GameManager.gameUi.UpdateHudScore();
-            _soundControllerInstance.ChangeSfx(3);
-            _soundControllerInstance.PlaySfx();
         }
 
         //when a row is deleted, this method brings down all the tretamino blocks above it.
         public void UpdateBlockLinesDown(int deletedLine)
         {
-            for (var line = deletedLine; line < Height; line++)
+            for (var line = deletedLine; line < _height; line++)
             {
-                for (var column = 0; column < Width; column++)
+                for (var column = 0; column < _width; column++)
                 {
                     if (_grid[column, line] == null) continue;
                     _grid[column, line - 1] = _grid[column, line];

@@ -8,7 +8,7 @@ namespace Context
         public GameManager GameManager { get; }
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }  
-        public  ITetraminoGrid TetraminoGrid { get; }
+        public  TetraminoManager TetraminoManager { get; }
     
     }
 }

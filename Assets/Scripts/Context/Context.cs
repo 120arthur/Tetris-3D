@@ -9,7 +9,7 @@ namespace Context
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }
         public WordsScriptable WordsScriptable { get; }
-        public  ITetraminoGrid TetraminoGrid { get; }
+        public  TetraminoManager TetraminoManager { get; }
 
         public Context()
         {
@@ -20,10 +20,11 @@ namespace Context
             GameManager = AssetLoader.LoadAndInstantiate<GameManager>($"Managers/{nameof(GameManager)}");
             
             WordsScriptable = AssetLoader.Load<WordsScriptable>($"WordSetting/{nameof(WordsScriptable)}");
-
+            
+            TetraminoManager = new TetraminoManager();
             Score = new ScoreController();
             MatchWords = new MatchWords(WordsScriptable.word);
-            TetraminoGrid = new TetraminoGrid();
+            
         }
     }
 }

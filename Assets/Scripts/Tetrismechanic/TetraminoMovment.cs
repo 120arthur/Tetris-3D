@@ -15,11 +15,11 @@ public class TetraminoMovment : MonoBehaviour
     [SerializeField] private GameObject parentAnchor;
 
     private SoundController _soundControllerInstance;
-    private ITetraminoGrid _tetraminoGridInstance;
+    private TetraminoManager _tetraminoGridInstance;
 
     private void Start()
     {
-        _tetraminoGridInstance = ContextProvider.Context.TetraminoGrid;
+        _tetraminoGridInstance = ContextProvider.Context.TetraminoManager;
         _soundControllerInstance = SoundController.SoundControllerInstance;
         SetVelocity();
         _currentSpeed = normalSpeed;
@@ -99,7 +99,7 @@ public class TetraminoMovment : MonoBehaviour
     {
         _canMove = false;
         Move(Vector3.up, transform);
-        _tetraminoGridInstance.AddTetrisToPositionList(gameObject.transform);
+        _tetraminoGridInstance.FinishTetraminoMovment(gameObject.transform);
         _tetraminoGridInstance.SearchForFullLines();
         enabled = false;
     }
