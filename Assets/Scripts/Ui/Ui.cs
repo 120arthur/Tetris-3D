@@ -12,18 +12,11 @@ public class Ui : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    /// <summary>
-    /// Turn on Ui Elements
-    /// </summary>
-    /// <param name="uiObjct"></param>
     protected static void TurnOnUi(GameObject uiObjct)
     {
         uiObjct.SetActive(true);
     }
-    /// <summary>
-    /// Turn off Ui Elements
-    /// </summary>
-    /// <param name="uiObjct"></param>
+   
     protected static void TurnOffUi(GameObject uiObjct)
     {
         uiObjct.SetActive(false);

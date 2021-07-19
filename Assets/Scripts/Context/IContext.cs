@@ -9,6 +9,7 @@ namespace Context
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }  
         public  TetraminoManager TetraminoManager { get; }
-    
+        public TetraminoSpawner TetraminoSpawner { get; }
+
     }
 }

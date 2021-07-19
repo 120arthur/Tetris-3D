@@ -6,23 +6,24 @@ using UnityEngine;
 
 public class TetraminoMovment : MonoBehaviour
 {
-    [SerializeField] private float fastSpeed;
-    [SerializeField] private float normalSpeed;
+    [SerializeField] private float _fastSpeed;
+    [SerializeField] private float _normalSpeed;
     private float _currentSpeed;
 
     private bool _canMove = true;
 
-    [SerializeField] private GameObject parentAnchor;
+    private GameObject _parentAnchor;
 
     private SoundController _soundControllerInstance;
     private TetraminoManager _tetraminoGridInstance;
 
     private void Start()
     {
+        _parentAnchor = transform.parent.gameObject;
         _tetraminoGridInstance = ContextProvider.Context.TetraminoManager;
         _soundControllerInstance = SoundController.SoundControllerInstance;
         SetVelocity();
-        _currentSpeed = normalSpeed;
+        _currentSpeed = _normalSpeed;
         StartCoroutine(TetraminoFall());
     }
 
@@ -58,27 +59,27 @@ public class TetraminoMovment : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Move(Vector3.left, parentAnchor.transform);
+            Move(Vector3.left, _parentAnchor.transform);
             if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
             {
-                Move(-Vector3.left, parentAnchor.transform);
+                Move(-Vector3.left, _parentAnchor.transform);
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Move(Vector3.right, parentAnchor.transform);
+            Move(Vector3.right, _parentAnchor.transform);
             if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
             {
-                Move(-Vector3.right, parentAnchor.transform);
+                Move(-Vector3.right, _parentAnchor.transform);
             }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            _currentSpeed = fastSpeed;
+            _currentSpeed = _fastSpeed;
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            _currentSpeed = normalSpeed;
+            _currentSpeed = _normalSpeed;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -109,15 +110,15 @@ public class TetraminoMovment : MonoBehaviour
     {
         if (ContextProvider.Context.Score.CurrentPoints() > 700)
         {
-            normalSpeed /= 3;
+            _normalSpeed /= 3;
         }
         else if (ContextProvider.Context.Score.CurrentPoints() >= 1200)
         {
-            normalSpeed /= 2;
+            _normalSpeed /= 2;
         }
         else if (ContextProvider.Context.Score.CurrentPoints() >= 1700)
         {
-            normalSpeed /= 1f;
+            _normalSpeed /= 1f;
         }
     }
 }

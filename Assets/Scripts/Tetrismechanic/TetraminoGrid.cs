@@ -5,9 +5,9 @@ using Context;
 namespace Tetrismechanic
 {
     /// <summary>
-    /// Control tetramino on the grid.
+    /// puts and removes tetraminos in the grid
     /// </summary>
-    public class TetraminoGrid : MonoBehaviour, ITetraminoGrid
+    public class TetraminoGrid : MonoBehaviour
     {
         private int _height;
         private int _width;

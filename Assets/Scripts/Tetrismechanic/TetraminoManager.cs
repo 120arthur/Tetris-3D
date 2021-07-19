@@ -16,7 +16,7 @@ namespace Tetrismechanic
 
         private readonly int upperBound;
 
-        private ITetraminoGrid _tetraminoGrid;
+        private TetraminoGrid _tetraminoGrid;
 
         private SoundController _soundControllerInstance;
 
@@ -61,7 +61,7 @@ namespace Tetrismechanic
 
             if (ContextProvider.Context.GameManager.gameIsOver) return;
 
-            TetrisSpawner.TetrisSpawnerInstance.SpawnTetris();
+            ContextProvider.Context.TetraminoSpawner.SpawnTetris();
             _soundControllerInstance.ChangeSfx(1);
             _soundControllerInstance.PlaySfx();
         }

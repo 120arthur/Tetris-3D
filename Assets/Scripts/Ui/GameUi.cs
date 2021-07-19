@@ -13,10 +13,8 @@ public class GameUi : Ui
 
     [Header("Reward")] [SerializeField] private GameObject _congratsPanel;
 
-    public void UpdateHudScore()
-    {
-        _scoreText.text = ContextProvider.Context.Score.CurrentPoints().ToString();
-    }
+    public void UpdateHudScore() => _scoreText.text = ContextProvider.Context.Score.CurrentPoints().ToString();
+
 
     #region PanelsActivateAndDeactivate
 
@@ -26,16 +24,10 @@ public class GameUi : Ui
         _gameOverPanel.UpdateTotalScore();
     }
 
-    public void PauseIn()
-    {
-        TurnOnUi(_pausePanel);
-    }
+    public void PauseIn() => TurnOnUi(_pausePanel);
 
-    public void PauseOut()
-    {
-        TurnOffUi(_pausePanel);
-    }
-
+    public void PauseOut() => TurnOffUi(_pausePanel);
+  
     // When the player form the correct word this Method will be called.
     public void CongratsIn()
     {
