@@ -4,13 +4,15 @@ namespace Context
 {
     public class Context : IContext
     {
-        public AssetLoader AssetLoader { get; }
+        private AssetLoader AssetLoader { get; }
+
         public GameManager GameManager { get; }
-        public IScore Score { get; }
-        public IMatchWords MatchWords { get; }
         public WordsScriptable WordsScriptable { get; }
         public TetraminoManager TetraminoManager { get; }
         public TetraminoSpawner TetraminoSpawner { get;}
+        public IScore Score { get; }
+        public IMatchWords MatchWords { get; }
+        public IInputType InputType { get; }
 
         public Context()
         {
@@ -24,9 +26,10 @@ namespace Context
 
             TetraminoSpawner = AssetLoader.LoadAndInstantiate<TetraminoSpawner>($"Managers/{nameof(TetraminoSpawner)}");
 
+            InputType = new DesktopInputType();
             TetraminoManager = new TetraminoManager();
-            Score = new ScoreController();
-            MatchWords = new MatchWords(WordsScriptable.word);
+            Score = new ScoreManager();
+            MatchWords = new MatchWords(WordsScriptable.Word);
 
         }
     }

@@ -4,12 +4,11 @@ namespace Context
 {
     public interface IContext 
     {
-        public AssetLoader AssetLoader { get; }
         public GameManager GameManager { get; }
-        public IScore Score { get; }
-        public IMatchWords MatchWords { get; }  
         public  TetraminoManager TetraminoManager { get; }
         public TetraminoSpawner TetraminoSpawner { get; }
-
+        public IInputType InputType { get; }
+        public IScore Score { get; }
+        public IMatchWords MatchWords { get; }
     }
 }

@@ -9,9 +9,9 @@ namespace Tetrismechanic
     /// </summary>
     public class TetraminoGrid : MonoBehaviour
     {
-        private int _height;
-        private int _width;
-        private Transform[,] _grid;
+        private readonly int _height;
+        private readonly int _width;
+        private readonly Transform[,] _grid;
 
         public TetraminoGrid(int height, int width, Transform[,] grid)
         {
@@ -19,8 +19,6 @@ namespace Tetrismechanic
             _width = width;
             _grid = grid;
         }
-
-        #region TetrisSystem
 
         // when the tetromino finishes the move, this method adds its position on the grid. 
         public void AddTetrisToPositionList(Transform tetramino)
@@ -58,7 +56,5 @@ namespace Tetrismechanic
                 }
             }
         }
-
-        #endregion
     }
 }

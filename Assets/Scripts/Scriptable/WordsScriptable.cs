@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Theme", menuName = "ScriptableObjects/WordTheme", order = 1)]
 public class WordsScriptable : ScriptableObject
 {
-    public string word;
+    public string Word;
 }

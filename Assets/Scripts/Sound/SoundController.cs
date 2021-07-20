@@ -7,10 +7,10 @@ public class SoundController : MonoBehaviour
 {
     public static SoundController SoundControllerInstance;
     
-    [SerializeField] private AudioSource music;
-    [SerializeField] private AudioSource sfx;
-    [SerializeField] private AudioClip[] sfxClip;
-    [SerializeField] private AudioClip[] musicClip;
+    [SerializeField] private AudioSource _music;
+    [SerializeField] private AudioSource _sfx;
+    [SerializeField] private AudioClip[] _sfxClip;
+    [SerializeField] private AudioClip[] _musicClip;
 
     private void Awake()
     {
@@ -25,20 +25,8 @@ public class SoundController : MonoBehaviour
         } 
     }
 
-    public void ChangeMusic(int musicIndex)
-    {
-        music.clip = musicClip[musicIndex];
-    }
-    public void ChangeSfx(int sfxIndex)
-    {
-        sfx.clip = sfxClip[sfxIndex];
-    }
-    public void PlayMusic()
-    {
-        music.Play();
-    } 
-    public void PlaySfx()
-    {
-        sfx.Play();
-    }
+    public void ChangeMusic(int musicIndex) => _music.clip = _musicClip[musicIndex];
+    public void ChangeSfx(int sfxIndex) => _sfx.clip = _sfxClip[sfxIndex];
+    public void PlayMusic() => _music.Play();
+    public void PlaySfx() => _sfx.Play();
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Context;
@@ -59,13 +58,14 @@ namespace Tetrismechanic
             _tetraminoGrid.AddTetrisToPositionList(tetramino);
             IsInBound(tetramino);
 
-            if (ContextProvider.Context.GameManager.gameIsOver) return;
-
-            ContextProvider.Context.TetraminoSpawner.SpawnTetris();
-            _soundControllerInstance.ChangeSfx(1);
-            _soundControllerInstance.PlaySfx();
+            if (!ContextProvider.Context.GameManager.gameIsOver)
+            {
+                ContextProvider.Context.TetraminoSpawner.SpawnTetris();
+                _soundControllerInstance.ChangeSfx(1);
+                _soundControllerInstance.PlaySfx();
+            }
         }
-
+      
         private void ClearLine(int line)
         {
             _tetraminoGrid.Remove(line);
@@ -106,7 +106,6 @@ namespace Tetrismechanic
             if (ContextProvider.Context.MatchWords.VerifyMatch(wordChar))
             {
                 ContextProvider.Context.GameManager.RewardChallenge();
-                wordChar.Clear();
             }
 
         }
@@ -117,5 +116,6 @@ namespace Tetrismechanic
                 ContextProvider.Context.GameManager.EndGame();
             }
         }
+       
     }
 }

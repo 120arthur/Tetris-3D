@@ -45,14 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb673962d9147b46a92799d939eac60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 7384921870456266779}
-  sfx: {fileID: 7384921870456266778}
-  sfxClip:
-  - {fileID: 8300000, guid: 5494d422cc4a97543876b6e74b5bc81e, type: 3}
+  _music: {fileID: 7384921870456266779}
+  _sfx: {fileID: 7384921870456266778}
+  _sfxClip:
   - {fileID: 8300000, guid: eb517da2e86111c4fae4767a69fbd3ef, type: 3}
   - {fileID: 8300000, guid: ed3894ee47b0cd04fb66f7f60bfbaa8b, type: 3}
   - {fileID: 8300000, guid: 64836deea8aa2d4448ec42c7b8586a80, type: 3}
-  musicClip:
+  - {fileID: 8300000, guid: 5494d422cc4a97543876b6e74b5bc81e, type: 3}
+  _musicClip:
   - {fileID: 8300000, guid: 58072ad01b07abe448c07a82c1017fec, type: 3}
   - {fileID: 8300000, guid: 3d94c3a3824a73f479e14e2812a884f2, type: 3}
 --- !u!82 &7384921870456266779

@@ -14,14 +14,12 @@ public class TetraminoMovment : MonoBehaviour
 
     private GameObject _parentAnchor;
 
-    private SoundController _soundControllerInstance;
-    private TetraminoManager _tetraminoGridInstance;
+    private TetraminoManager _tetraminoManager;
 
     private void Start()
     {
         _parentAnchor = transform.parent.gameObject;
-        _tetraminoGridInstance = ContextProvider.Context.TetraminoManager;
-        _soundControllerInstance = SoundController.SoundControllerInstance;
+        _tetraminoManager = ContextProvider.Context.TetraminoManager;
         SetVelocity();
         _currentSpeed = _normalSpeed;
         StartCoroutine(TetraminoFall());
@@ -29,7 +27,7 @@ public class TetraminoMovment : MonoBehaviour
 
     private void Update()
     {
-        Inputs();
+        InputVerifyer();
     }
 
     private IEnumerator TetraminoFall()
@@ -39,54 +37,12 @@ public class TetraminoMovment : MonoBehaviour
 
         transform.position += Vector3.down;
         // When the grid position is invalid the tetramino returns to the viewing position.
-        if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
+        if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
         {
             TetraminoBeat();
         }
 
         StartCoroutine(TetraminoFall());
-    }
-
-    private void Inputs()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            transform.Rotate(0, 0, -90);
-            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
-            {
-                transform.Rotate(0, 0, 90);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Move(Vector3.left, _parentAnchor.transform);
-            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
-            {
-                Move(-Vector3.left, _parentAnchor.transform);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Move(Vector3.right, _parentAnchor.transform);
-            if (_tetraminoGridInstance.ThisPositionIsValid(gameObject.transform) == false)
-            {
-                Move(-Vector3.right, _parentAnchor.transform);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            _currentSpeed = _fastSpeed;
-        }
-        else if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            _currentSpeed = _normalSpeed;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _currentSpeed = 0;
-            _soundControllerInstance.ChangeSfx(0);
-            _soundControllerInstance.PlaySfx();
-        }
     }
 
     // Move tetramino for the specified position.
@@ -100,9 +56,9 @@ public class TetraminoMovment : MonoBehaviour
     {
         _canMove = false;
         Move(Vector3.up, transform);
-        _tetraminoGridInstance.FinishTetraminoMovment(gameObject.transform);
-        _tetraminoGridInstance.SearchForFullLines();
-        enabled = false;
+        _tetraminoManager.FinishTetraminoMovment(gameObject.transform);
+        _tetraminoManager.SearchForFullLines();
+        DeletePaent();
     }
 
     // When tetramino is instantiated, this function changes the speed based on the score.
@@ -121,4 +77,85 @@ public class TetraminoMovment : MonoBehaviour
             _normalSpeed /= 1f;
         }
     }
+
+    public void DeletePaent()
+    {
+        transform.DetachChildren();
+        Destroy(transform.parent.gameObject);
+    }
+
+    void InputVerifyer()
+    {
+        if (Input.anyKeyDown || Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            switch (ContextProvider.Context.InputType.VerifyInput())
+            {
+                case InputMovment.Rotate:
+                    Rotate();
+                    break;
+
+                case InputMovment.MoveRight:
+                    MoveRight();
+                    break;
+
+                case InputMovment.MoveLeft:
+                    MoveLeft();
+                    break;
+
+                case InputMovment.MoveFast:
+                    _currentSpeed = _fastSpeed;
+                    break;
+
+                case InputMovment.NormalMovment:
+                    NormalMovment();
+
+                    break;
+
+                case InputMovment.Skip:
+                    skip();
+                    break;
+
+                case InputMovment.Empty:
+                    break;
+
+            }
+        }
+    }
+
+    #region Tetramino Movimentation Methods
+    private void Rotate()
+    {
+        transform.Rotate(0, 0, -90);
+        if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+        {
+            transform.Rotate(0, 0, 90);
+        }
+    }
+    private void MoveRight()
+    {
+        Move(Vector3.right, _parentAnchor.transform);
+        if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+        {
+            Move(-Vector3.right, _parentAnchor.transform);
+        }
+    }
+    private void MoveLeft()
+    {
+        Move(Vector3.left, _parentAnchor.transform);
+        if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+        {
+            Move(-Vector3.left, _parentAnchor.transform);
+        }
+    }
+    private void skip()
+    {
+        _currentSpeed = 0;
+        SoundController.SoundControllerInstance.ChangeSfx(0);
+        SoundController.SoundControllerInstance.PlaySfx();
+    }
+    private void NormalMovment()
+    {
+        _currentSpeed = _normalSpeed;
+    }
+    #endregion
 }
