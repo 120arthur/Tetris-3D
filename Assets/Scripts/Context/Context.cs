@@ -1,5 +1,9 @@
+using AssetLoad;
+using Input;
+using Match;
 using Score;
-using Tetrismechanic;
+using TetrisMechanic;
+
 namespace Context
 {
     public class Context : IContext
@@ -9,7 +13,7 @@ namespace Context
         public GameManager GameManager { get; }
         public WordsScriptable WordsScriptable { get; }
         public TetraminoManager TetraminoManager { get; }
-        public TetraminoSpawner TetraminoSpawner { get;}
+        public TetraminoSpawner TetraminoSpawner { get; }
         public IScore Score { get; }
         public IMatchWords MatchWords { get; }
         public IInputType InputType { get; }
@@ -25,12 +29,13 @@ namespace Context
             WordsScriptable = AssetLoader.Load<WordsScriptable>($"WordSetting/{nameof(WordsScriptable)}");
 
             TetraminoSpawner = AssetLoader.LoadAndInstantiate<TetraminoSpawner>($"Managers/{nameof(TetraminoSpawner)}");
-
+            
+            //since this creation is in context, we can easily change to another script with another formula
             InputType = new DesktopInputType();
             TetraminoManager = new TetraminoManager();
             Score = new ScoreManager();
-            MatchWords = new MatchWords(WordsScriptable.Word);
-
+            MatchWords = new MatchWords(WordsScriptable.word);
         }
+        
     }
 }

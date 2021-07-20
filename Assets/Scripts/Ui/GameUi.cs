@@ -2,44 +2,58 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class GameUi : Ui
+namespace Ui
 {
-    [Header("Hud")] [SerializeField] private Text _scoreText;
-
-    [Header("GameOver")] [SerializeField] private GameOverPanel _gameOverPanel;
-
-    [Header("Pause")] [SerializeField] private GameObject _pausePanel;
-
-    [Header("Reward")] [SerializeField] private GameObject _congratsPanel;
-
-    public void UpdateHudScore() => _scoreText.text = ContextProvider.Context.Score.CurrentPoints().ToString();
-
-
-    #region PanelsActivateAndDeactivate
-
-    public void GameOverPanelIn()
+    public class GameUi : Ui
     {
-        _gameOverPanel.Show();
-        _gameOverPanel.UpdateTotalScore();
+        [Header("Hud")] [SerializeField] private Text scoreText;
+
+        [Header("GameOver")] [SerializeField] private GameOverPanel gameOverPanel;
+
+        [Header("Pause")] [SerializeField] private GameObject pausePanel;
+
+        [Header("Reward")] [SerializeField] private GameObject congratsPanel;
+
+        public void UpdateHudScore() => scoreText.text = ContextProvider.Context.Score.CurrentPoints().ToString();
+
+
+        #region PanelsActivateAndDeactivate
+
+        public void GameOverPanelIn()
+        {
+            TurnOnUi(gameOverPanel.gameObject);
+            gameOverPanel.UpdateTotalScore();
+        } 
+        public void GameOverPanelOut()
+        {
+            TurnOffUi(gameOverPanel.gameObject);
+        }
+
+        public void PauseIn()
+        {
+            ContextProvider.Context.GameManager.PauseGameToggle(true);
+            TurnOnUi(pausePanel);
+        }
+
+        public void PauseOut()
+        {
+            ContextProvider.Context.GameManager.PauseGameToggle(false);
+            TurnOffUi(pausePanel);
+        }
+
+        // When the player form the correct word this Method will be called.
+        public void CongratsIn()
+        {
+            ContextProvider.Context.GameManager.PauseGameToggle(true);
+            TurnOnUi(congratsPanel);
+        }
+
+        public void CongratsOut()
+        {
+            ContextProvider.Context.GameManager.PauseGameToggle(false);
+            TurnOffUi(congratsPanel);
+        }
+
+        #endregion
     }
-
-    public void PauseIn() => TurnOnUi(_pausePanel);
-
-    public void PauseOut() => TurnOffUi(_pausePanel);
-  
-    // When the player form the correct word this Method will be called.
-    public void CongratsIn()
-    {
-        TurnOnUi(_congratsPanel);
-        ContextProvider.Context.GameManager.PauseGameToggle(true);
-    }
-
-    public void CongratsOut()
-    {
-        TurnOffUi(_congratsPanel);
-        ContextProvider.Context.GameManager.PauseGameToggle(false);
-    }
-
-    #endregion
 }

@@ -1,40 +1,42 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// This class is in charge of selecting and instantiating tretramino.
-/// </summary>
-public class TetraminoSpawner : MonoBehaviour
+namespace TetrisMechanic
 {
-    // This matrix stores all pre-made tetris.
-    [SerializeField] private GameObject[] tetrisPrefabs;
-
-    // Store last tetris spawned index
-    private int _previewTetris;
-
-
-    private void Start()
+    /// <summary>
+    /// This class is in charge of selecting and instantiating tretramino.
+    /// </summary>
+    public class TetraminoSpawner : MonoBehaviour
     {
-        SpawnTetris();
-    }
+        // This matrix stores all pre-made tetris.
+        [SerializeField] private GameObject[] tetrisPrefabs;
 
-    // This method instantiates a random tetris.
-    public void SpawnTetris()
-    {
-        while (true)
+        public GameObject currentTetramino;
+        // Store last tetris spawned index
+        private int _previewTetris;
+
+
+        private void Start()
         {
-            var tetrisToSpawn = SwitchNumber(0, tetrisPrefabs.Length);
+            SpawnTetris();
+        }
 
-            if (_previewTetris != tetrisToSpawn)
+        // This method instantiates a random tetris.
+        public void SpawnTetris()
+        {
+            while (true)
             {
-                Instantiate(tetrisPrefabs[tetrisToSpawn], gameObject.transform.position, Quaternion.identity);
+                var tetrisToSpawn = SwitchNumber(0, tetrisPrefabs.Length);
+
+                if (_previewTetris == tetrisToSpawn) continue;
+                
+               currentTetramino = Instantiate(tetrisPrefabs[tetrisToSpawn], gameObject.transform.position, Quaternion.identity);
                 _previewTetris = tetrisToSpawn;
 
                 break;
             }
-            continue;
         }
-    }
 
-    private int SwitchNumber(int min, int max) => Random.Range(min, max);
+        private int SwitchNumber(int min, int max) => Random.Range(min, max);
+    }
 }

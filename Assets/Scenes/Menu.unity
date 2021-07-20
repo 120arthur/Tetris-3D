@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!82 &1295719241 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7384921870456266778, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+  m_PrefabInstance: {fileID: 7384921869850788350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1295719242 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7384921870456266779, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+  m_PrefabInstance: {fileID: 7384921869850788350}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &656242377390150792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,13 +486,61 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfx
+      value: 
+      objectReference: {fileID: 1295719241}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 1295719242}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
       propertyPath: sfxClip.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: musicClip.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5494d422cc4a97543876b6e74b5bc81e, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: eb517da2e86111c4fae4767a69fbd3ef, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ed3894ee47b0cd04fb66f7f60bfbaa8b, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 64836deea8aa2d4448ec42c7b8586a80, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
       propertyPath: sfxClip.Array.data[4]
       value: 
-      objectReference: {fileID: 8300000, guid: 5c58d23bba1b4f947846bd47601014a6, type: 3}
+      objectReference: {fileID: 8300000, guid: eb517da2e86111c4fae4767a69fbd3ef, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: ed3894ee47b0cd04fb66f7f60bfbaa8b, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 64836deea8aa2d4448ec42c7b8586a80, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: sfxClip.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5494d422cc4a97543876b6e74b5bc81e, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: musicClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 58072ad01b07abe448c07a82c1017fec, type: 3}
+    - target: {fileID: 7384921870456266776, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
+      propertyPath: musicClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d94c3a3824a73f479e14e2812a884f2, type: 3}
     - target: {fileID: 7384921870456266777, guid: e2ded654d692b4741b7bc5a1da727ab7, type: 3}
       propertyPath: m_RootOrder
       value: 4

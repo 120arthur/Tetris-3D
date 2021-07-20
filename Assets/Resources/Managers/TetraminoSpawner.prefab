@@ -46,7 +46,7 @@ MonoBehaviour:
   tetrisPrefabs:
   - {fileID: 5628033248572231851, guid: c5276730fe1aa0445aab382d048c6aee, type: 3}
   - {fileID: 5347555767245636210, guid: 0e5b4005baded714dab36124f7e9b96d, type: 3}
-  - {fileID: 5347555767245636210, guid: 664336cd7a3ff4f47a2b6a4d47015b00, type: 3}
+  - {fileID: 5347555767245636210, guid: 7e7daa10b2cfb9b47ba857279364e4ea, type: 3}
   - {fileID: 5628033248572231851, guid: 11ccd69a77da01a4c939a648da64a5c9, type: 3}
   - {fileID: 5628033248572231851, guid: 0808bc4c4267bf74fb1ce82f4a63876e, type: 3}
   - {fileID: 5628033248572231851, guid: 7cd5bf7cb8ea7cc4faf770537441e321, type: 3}

@@ -1,5 +1,3 @@
-using System;
-
 namespace Context
 {
     public static class ContextProvider
@@ -8,14 +6,7 @@ namespace Context
 
         public static void Subscribe(IContext context)
         {
-          /*if (Context != null)
-            {
-                return;
-            }
-            */
             Context = context;
         }
-        
-
     }
 }

@@ -1,30 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Context;
+using Sound;
 
-namespace Tetrismechanic
+namespace TetrisMechanic
 {
-
-
     public class TetraminoManager : MonoBehaviour
     {
         // These variables define the height and width of the tetris grid.
-        public readonly int Height = 25;
-        public readonly int Width = 10;
-        public readonly Transform[,] Grid;
+        private const int Height = 25;
+        private const int Width = 10;
+        private readonly Transform[,] _grid;
 
-        private readonly int upperBound;
+        private readonly int _upperBound;
 
-        private TetraminoGrid _tetraminoGrid;
+        private readonly TetraminoGrid _tetraminoGrid;
 
-        private SoundController _soundControllerInstance;
+        private readonly SoundController _soundControllerInstance;
 
         public TetraminoManager()
         {
-            upperBound = Height - 3;
+            _upperBound = Height - 3;
             _soundControllerInstance = SoundController.SoundControllerInstance;
-            Grid = new Transform[Width, Height];
-            _tetraminoGrid = new TetraminoGrid(Height, Width, Grid);
+            _grid = new Transform[Width, Height];
+            _tetraminoGrid = new TetraminoGrid(Height, Width, _grid);
         }
 
         public bool ThisPositionIsValid(Transform tetramino)
@@ -36,7 +36,7 @@ namespace Tetrismechanic
                 var roundedY = Mathf.RoundToInt(position.y);
 
                 if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height ||
-                    Grid[roundedX, roundedY] != null)
+                    _grid[roundedX, roundedY] != null)
                 {
                     return false;
                 }
@@ -49,21 +49,28 @@ namespace Tetrismechanic
             for (var line = Height - 1; line >= 0; line--)
             {
                 if (!IsLineFull(line)) continue;
-                checkWordsInLine(line);
+                CheckWordsInLine(line);
                 ClearLine(line);
             }
         }
-        public void FinishTetraminoMovment(Transform tetramino)
+        public void FinishTetraminoMovement(Transform tetramino)
         {
             _tetraminoGrid.AddTetrisToPositionList(tetramino);
             IsInBound(tetramino);
 
-            if (!ContextProvider.Context.GameManager.gameIsOver)
+            if (ContextProvider.Context.GameManager.gameIsOver) return;
+            
+            ContextProvider.Context.TetraminoSpawner.SpawnTetris();
+            _soundControllerInstance.ChangeSfx(1);
+            _soundControllerInstance.PlaySfx();
+        }
+        public void ClearGrid()
+        {
+            for (int line = 0; line < Height; line++)
             {
-                ContextProvider.Context.TetraminoSpawner.SpawnTetris();
-                _soundControllerInstance.ChangeSfx(1);
-                _soundControllerInstance.PlaySfx();
-            }
+                _tetraminoGrid.Remove(line);
+                
+            } 
         }
       
         private void ClearLine(int line)
@@ -81,26 +88,24 @@ namespace Tetrismechanic
 
             for (var column = 0; column < Width; column++)
             {
-                if (Grid[column, line] == null)
+                if (_grid[column, line] == null)
                 {
                     return false;
                 }
             }
             return true;
         }
-        private void checkWordsInLine(int line)
+        private void CheckWordsInLine(int line)
         {
             if (!IsLineFull(line)) return;
 
             var wordChar = new List<char>();
 
-            for (int i = 0; i < Width; i++)
+            for (var i = 0; i < Width; i++)
             {
-                if (!Grid[i, line].CompareTag("Untagged"))
-                {
-                    var letterTag = Grid[i, line].tag;
-                    wordChar.Add(letterTag[0]);
-                }
+                if (_grid[i, line].CompareTag("Untagged")) continue;
+                var letterTag = _grid[i, line].tag;
+                wordChar.Add(letterTag[0]);
             }
 
             if (ContextProvider.Context.MatchWords.VerifyMatch(wordChar))
@@ -111,7 +116,7 @@ namespace Tetrismechanic
         }
         private void IsInBound(Transform block)
         {
-            if (Mathf.RoundToInt(block.position.y) >= upperBound)
+            if (Mathf.RoundToInt(block.position.y) >= _upperBound)
             {
                 ContextProvider.Context.GameManager.EndGame();
             }

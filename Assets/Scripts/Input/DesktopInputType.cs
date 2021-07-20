@@ -1,37 +1,39 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DesktopInputType : IInputType
+namespace Input
 {
-    public InputMovment VerifyInput()
+    public class DesktopInputType : IInputType
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        public InputMovement VerifyInput()
         {
-            return InputMovment.Rotate;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            return InputMovment.MoveLeft;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            return InputMovment.MoveRight;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            return InputMovment.MoveFast;
-        }
-        else if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            return InputMovment.NormalMovment;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            return InputMovment.Skip;
-        }
-        else
-        {
-            return InputMovment.Empty;
+            if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                return InputMovement.Rotate;
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                return InputMovement.MoveLeft;
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                return InputMovement.MoveRight;
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                return InputMovement.MoveFast;
+            }
+            else if (UnityEngine.Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                return InputMovement.NormalMovement;
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            {
+                return InputMovement.Skip;
+            }
+            else
+            {
+                return InputMovement.Empty;
+            }
         }
     }
 }

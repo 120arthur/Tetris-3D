@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Context;
 
-namespace Tetrismechanic
+namespace TetrisMechanic
 {
     /// <summary>
-    /// puts and removes tetraminos in the grid
+    /// Puts and removes tetraminos in the grid
     /// </summary>
     public class TetraminoGrid : MonoBehaviour
     {
@@ -20,7 +18,10 @@ namespace Tetrismechanic
             _grid = grid;
         }
 
-        // when the tetromino finishes the move, this method adds its position on the grid. 
+        /// <summary>
+        // when the tetromino finishes the move, this method adds its position on the grid.
+        /// </summary>
+        /// <param name="tetramino"></param>
         public void AddTetrisToPositionList(Transform tetramino)
         {
             foreach (Transform children in tetramino)
@@ -34,15 +35,16 @@ namespace Tetrismechanic
         {
             for (var column = 0; column < _width; column++)
             {
-                if (_grid[column, lineToRemove])
-                {
-                    Destroy(_grid[column, lineToRemove].gameObject);
-                    _grid[column, lineToRemove] = null;
-                }
+                if (!_grid[column, lineToRemove]) continue;
+                Destroy(_grid[column, lineToRemove].gameObject);
+                _grid[column, lineToRemove] = null;
             }
         }
 
+        /// <summary>
         //when a row is deleted, this method brings down all the tretamino blocks above it.
+        /// </summary>
+        /// <param name="deletedLine"></param>
         public void UpdateBlockLinesDown(int deletedLine)
         {
             for (var line = deletedLine; line < _height; line++)

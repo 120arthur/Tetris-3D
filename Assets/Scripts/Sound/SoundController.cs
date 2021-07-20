@@ -1,32 +1,35 @@
 using UnityEngine;
-/// <summary>
-/// This class manages all sounds in the game.
-/// This class is a singleton.
-/// </summary>
-public class SoundController : MonoBehaviour
+
+namespace Sound
 {
-    public static SoundController SoundControllerInstance;
-    
-    [SerializeField] private AudioSource _music;
-    [SerializeField] private AudioSource _sfx;
-    [SerializeField] private AudioClip[] _sfxClip;
-    [SerializeField] private AudioClip[] _musicClip;
-
-    private void Awake()
+    /// <summary>
+    /// This class manages all sounds in the game.
+    /// </summary>
+    public class SoundController : MonoBehaviour
     {
-        
-        DontDestroyOnLoad (this);
-	 
-        if (SoundControllerInstance == null) {         
-            SoundControllerInstance = this;     
-        } 
-        else {
-            Destroy(gameObject);
-        } 
-    }
+        public static SoundController SoundControllerInstance;
+    
+        [SerializeField] private AudioSource music;
+        [SerializeField] private AudioSource sfx;
+        [SerializeField] private AudioClip[] sfxClip;
+        [SerializeField] private AudioClip[] musicClip;
 
-    public void ChangeMusic(int musicIndex) => _music.clip = _musicClip[musicIndex];
-    public void ChangeSfx(int sfxIndex) => _sfx.clip = _sfxClip[sfxIndex];
-    public void PlayMusic() => _music.Play();
-    public void PlaySfx() => _sfx.Play();
+        private void Awake()
+        {
+        
+            DontDestroyOnLoad (this);
+	 
+            if (SoundControllerInstance == null) {         
+                SoundControllerInstance = this;     
+            } 
+            else {
+                Destroy(gameObject);
+            } 
+        }
+
+        public void ChangeMusic(int musicIndex) => music.clip = musicClip[musicIndex];
+        public void ChangeSfx(int sfxIndex) => sfx.clip = sfxClip[sfxIndex];
+        public void PlayMusic() => music.Play();
+        public void PlaySfx() => sfx.Play();
+    }
 }

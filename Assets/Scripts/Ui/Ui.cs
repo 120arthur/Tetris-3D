@@ -1,24 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// This class has useful functions to UI.
-/// </summary>
-public class Ui : MonoBehaviour
+namespace Ui
 {
-    // This method are called in on the ui buttons.
-    public void ChangeScene(string sceneName)
+    /// <summary>
+    /// This class has useful functions to UI.
+    /// </summary>
+    public class Ui : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneName);
-    }
+        // This method are called in on the ui buttons.
+        public void ChangeScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
 
-    protected static void TurnOnUi(GameObject uiObjct)
-    {
-        uiObjct.SetActive(true);
-    }
-   
-    protected static void TurnOffUi(GameObject uiObjct)
-    {
-        uiObjct.SetActive(false);
+        protected static void TurnOnUi(GameObject uiObject)
+        {
+            uiObject.SetActive(true);
+        }
+
+        protected static void TurnOffUi(GameObject uiObject)
+        {
+            uiObject.SetActive(false);
+        }
     }
 }
