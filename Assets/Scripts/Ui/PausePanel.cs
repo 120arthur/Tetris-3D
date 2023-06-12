@@ -1,27 +1,31 @@
-﻿using Context;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Ui
 {
     public class PausePanel : Ui
     {
+        [Inject]
+        private ControllerManager m_ControllerManager;
+        [Inject]
+        private GameUi m_GameUi;
+
         [SerializeField] private Button continueButton;
         [SerializeField] private Button menuButton;
         [SerializeField] private Button replayButton;
 
         private void Awake()
         {
-            continueButton.onClick.AddListener(() => { ContextProvider.Context.GameManager.gameUi.PauseOut(); });
+            continueButton.onClick.AddListener(() => { m_GameUi.PauseOut(); });
 
-            menuButton.onClick.AddListener(() => { ContextProvider.Context.GameManager.LoadMenu(); });
-            
+            menuButton.onClick.AddListener(() => { m_ControllerManager.LoadMenu(); });
+
             replayButton.onClick.AddListener(() =>
                                              {
-                                                 ContextProvider.Context.GameManager.Replay();
-                                                 ContextProvider.Context.GameManager.gameUi.PauseOut();
+                                                 m_ControllerManager.Replay();
+                                                 m_GameUi.PauseOut();
                                              });
-            
         }
     }
 }

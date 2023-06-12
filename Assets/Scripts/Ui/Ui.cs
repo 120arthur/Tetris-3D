@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+using Zenject;
 
 namespace Ui
 {
@@ -8,10 +9,14 @@ namespace Ui
     /// </summary>
     public class Ui : MonoBehaviour
     {
+        [Inject]
+        private GameManager m_GameManager;
+
         // This method are called in on the ui buttons.
         public void ChangeScene(string sceneName)
         {
-            SceneManager.LoadScene(sceneName);
+            m_GameManager.m_NextSxene = sceneName;
+            Addressables.LoadSceneAsync("Loading", activateOnLoad: true);
         }
 
         protected static void TurnOnUi(GameObject uiObject)

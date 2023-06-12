@@ -7,14 +7,9 @@ namespace Match
     /// <summary>
     /// This class aims to verify if the words assigned to it match.
     /// </summary>
-    public class MatchWords : MonoBehaviour, IMatchWords
+    public class MatchWords : IMatchWords
     {
-        public string wordTheme;
-
-        public MatchWords(string correctWord)
-        {
-            wordTheme = correctWord;
-        }
+        public string wordTheme = "kokku";
     
         // If the received word matches the one predefined by the ScriptableObject(wordTheme), the method returns true.
         public bool VerifyMatch(List<char> wordLettersChars)

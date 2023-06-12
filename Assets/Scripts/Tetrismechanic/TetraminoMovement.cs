@@ -1,13 +1,24 @@
 using System.Collections;
-using Context;
+//using Context;
 using Input;
+using Score;
 using Sound;
 using UnityEngine;
+using Zenject;
 
 namespace TetrisMechanic
 {
     public class TetraminoMovement : MonoBehaviour
     {
+        [Inject]
+        private SoundController m_SoundController;
+        [Inject]
+        private TetraminoManager m_TetraminoManager;
+        [Inject]
+        private ScoreManager m_ScoreManager;
+        [Inject]
+        private DesktopInputType m_DesktopInputType;
+
         [SerializeField] private float fastSpeed;
         [SerializeField] private float normalSpeed;
         private float _currentSpeed;
@@ -16,12 +27,9 @@ namespace TetrisMechanic
 
         private GameObject _parentAnchor;
 
-        private TetraminoManager _tetraminoManager;
-
         private void Start()
         {
             _parentAnchor = transform.parent.gameObject;
-            _tetraminoManager = ContextProvider.Context.TetraminoManager;
             SetVelocity();
             _currentSpeed = normalSpeed;
             StartCoroutine(TetraminoFall());
@@ -39,7 +47,7 @@ namespace TetrisMechanic
 
             transform.position += Vector3.down;
             // When the grid position is invalid the tetramino returns to the viewing position.
-            if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+            if (m_TetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
             {
                 TetraminoBeat();
             }
@@ -55,23 +63,23 @@ namespace TetrisMechanic
         {
             _canMove = false;
             Move(Vector3.up, transform);
-            _tetraminoManager.FinishTetraminoMovement(gameObject.transform);
-            _tetraminoManager.SearchForFullLines();
+            m_TetraminoManager.FinishTetraminoMovement(gameObject.transform);
+            m_TetraminoManager.SearchForFullLines();
             DeleteParent();
         }
 
         // When tetramino is instantiated, this function changes the speed based on the score.
         private void SetVelocity()
         {
-            if (ContextProvider.Context.Score.CurrentPoints() > 700)
+            if (m_ScoreManager.CurrentPoints() > 700)
             {
                 normalSpeed /= 3;
             }
-            else if (ContextProvider.Context.Score.CurrentPoints() >= 1200)
+            else if (m_ScoreManager.CurrentPoints() >= 1200)
             {
                 normalSpeed /= 2;
             }
-            else if (ContextProvider.Context.Score.CurrentPoints() >= 1700)
+            else if (m_ScoreManager.CurrentPoints() >= 1700)
             {
                 normalSpeed /= 1f;
             }
@@ -88,27 +96,27 @@ namespace TetrisMechanic
         {
             if (!UnityEngine.Input.anyKeyDown && !UnityEngine.Input.GetKeyUp(KeyCode.DownArrow)) return;
 
-            if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.Rotate)
+            if (m_DesktopInputType.VerifyInput() == InputMovement.Rotate)
             {
                 Rotate();
             }
-            else if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.MoveRight)
+            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveRight)
             {
                 MoveRight();
             }
-            else if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.MoveLeft)
+            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveLeft)
             {
                 MoveLeft();
             }
-            else if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.MoveFast)
+            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveFast)
             {
                 _currentSpeed = fastSpeed;
             }
-            else if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.NormalMovement)
+            else if (m_DesktopInputType.VerifyInput() == InputMovement.NormalMovement)
             {
                 NormalMovement();
             }
-            else if (ContextProvider.Context.InputType.VerifyInput() == InputMovement.Skip)
+            else if (m_DesktopInputType.VerifyInput() == InputMovement.Skip)
             {
                 Skip();
             }
@@ -119,7 +127,7 @@ namespace TetrisMechanic
         private void Rotate()
         {
             transform.Rotate(0, 0, -90);
-            if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+            if (m_TetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
             {
                 transform.Rotate(0, 0, 90);
             }
@@ -128,7 +136,7 @@ namespace TetrisMechanic
         private void MoveRight()
         {
             Move(Vector3.right, _parentAnchor.transform);
-            if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+            if (m_TetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
             {
                 Move(-Vector3.right, _parentAnchor.transform);
             }
@@ -137,7 +145,7 @@ namespace TetrisMechanic
         private void MoveLeft()
         {
             Move(Vector3.left, _parentAnchor.transform);
-            if (_tetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
+            if (m_TetraminoManager.ThisPositionIsValid(gameObject.transform) == false)
             {
                 Move(-Vector3.left, _parentAnchor.transform);
             }
@@ -146,8 +154,8 @@ namespace TetrisMechanic
         private void Skip()
         {
             _currentSpeed = 0;
-            SoundController.SoundControllerInstance.ChangeSfx(0);
-            SoundController.SoundControllerInstance.PlaySfx();
+            m_SoundController.ChangeSfx(0);
+            m_SoundController.PlaySfx();
         }
 
         private void NormalMovement() => _currentSpeed = normalSpeed;

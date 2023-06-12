@@ -1,10 +1,12 @@
 using UnityEngine;
+using Zenject;
 
 public class StartGame : MonoBehaviour
 {
+    [Inject]
+    private ControllerManager m_ControllerManager;
     private void Start()
     {
-       var context = new Context.Context();
-        context.GameManager.gameIsOver = false;
+        m_ControllerManager.GameIsOver = false;
     }
 }
