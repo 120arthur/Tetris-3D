@@ -17,15 +17,34 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: a8591faeef39d0d4b846e118cf606bf2
   m_SerializeEntries:
-  - m_GUID: 2163e27021a1a0943a8440093022b027
-    m_Address: WordSetting/WordsScriptable
+  - m_GUID: 9bc41f62be4b0d8469574479c207992e
+    m_Address: TetraminoSpawner
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9bc41f62be4b0d8469574479c207992e
-    m_Address: Managers/TetraminoSpawner
+  - m_GUID: a90e70bed1bffb245b6d3c8958afbdea
+    m_Address: NORMAL
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - CubeTypes
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7058554f65559948a14cffac409a3f6
+    m_Address: ANGRY
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CubeTypes
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f5a9b24d8f47d4449164bf943579539
+    m_Address: BORED
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CubeTypes
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c044e749e11fc2743b6f10080191001d
+    m_Address: ENERGY
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CubeTypes
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5d2c98be6c62923498795eb01489e58f, type: 2}

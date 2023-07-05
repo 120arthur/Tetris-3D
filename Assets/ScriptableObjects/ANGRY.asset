@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25542fa95c503f546a8fa6183c4246d8, type: 3}
-  m_Name: WordsScriptable
+  m_Script: {fileID: 11500000, guid: fb13567ef8d5c0740946c75c27a91a38, type: 3}
+  m_Name: ANGRY
   m_EditorClassIdentifier: 
-  word: kokku
+  Material: {fileID: 2100000, guid: 988e6e318184a7b4282e943a075dbf6d, type: 2}
+  TetraminoCubeType: 1

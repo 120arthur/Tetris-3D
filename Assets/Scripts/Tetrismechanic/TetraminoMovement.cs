@@ -1,10 +1,12 @@
 using System.Collections;
-//using Context;
+using System.Collections.Generic;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Input;
 using Score;
 using Sound;
 using UnityEngine;
 using Zenject;
+using UnityEngine.AddressableAssets;
 
 namespace TetrisMechanic
 {
@@ -17,10 +19,15 @@ namespace TetrisMechanic
         [Inject]
         private ScoreManager m_ScoreManager;
         [Inject]
-        private DesktopInputType m_DesktopInputType;
+        private IInputType m_IInputType;
+
+        private AsyncOperationHandle<IList<TetraminoCubeInfo>> m_CubeTypesLoadOpHandle;
+        private List<string> m_Keys = new List<string>() { "CubeTypes" };
 
         [SerializeField] private float fastSpeed;
         [SerializeField] private float normalSpeed;
+        [SerializeField] private TetraminoCube[] m_TetraminoCubes;
+
         private float _currentSpeed;
 
         private bool _canMove = true;
@@ -33,11 +40,73 @@ namespace TetrisMechanic
             SetVelocity();
             _currentSpeed = normalSpeed;
             StartCoroutine(TetraminoFall());
+
+            m_CubeTypesLoadOpHandle = Addressables.LoadAssetsAsync<TetraminoCubeInfo>(m_Keys, null, Addressables.MergeMode.Union);
+            m_CubeTypesLoadOpHandle.Completed += OnCubeTypesLadComplete;
+
+        }
+
+        private void OnCubeTypesLadComplete(AsyncOperationHandle<IList<TetraminoCubeInfo>> asyncOperationHandle)
+        {
+            Debug.Log("AsyncOperationHandle Status: " + asyncOperationHandle.Status);
+
+            if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                SetTetraminoCubes();
+            }
         }
 
         private void Update()
         {
             InputVerifier();
+        }
+
+        private void SetTetraminoCubes()
+        {
+            float random = Random.Range(1f, 100f);
+            if (random < 80)
+            {
+                m_TetraminoCubes[Random.Range(1, m_TetraminoCubes.Length)].SetTetraminoCubeInfo(SortSpecialCube());
+            }
+
+            for (int i = 0; i < m_TetraminoCubes.Length; i++)
+            {
+                if (m_TetraminoCubes[i].TetraminoCubeType == TetraminoCubeType.NORMAL)
+                {
+                    m_TetraminoCubes[i].SetTetraminoCubeInfo(SetNormalCube());
+                }
+            }
+        }
+
+        private TetraminoCubeInfo SortSpecialCube()
+        {
+            var itens = m_CubeTypesLoadOpHandle.Result;
+
+            int sortedIndex = Random.Range(0, itens.Count);
+            TetraminoCubeInfo sortedItem = itens[sortedIndex];
+
+            while (sortedItem.TetraminoCubeType == TetraminoCubeType.NORMAL)
+            {
+                sortedIndex = Random.Range(0, itens.Count);
+                sortedItem = itens[sortedIndex];
+            }
+
+            return sortedItem;
+        }
+
+        private TetraminoCubeInfo SetNormalCube()
+        {
+            var itens = m_CubeTypesLoadOpHandle.Result;
+
+            for (int i = 0; i < itens.Count; i++)
+            {
+                if (itens[i].TetraminoCubeType == TetraminoCubeType.NORMAL)
+                {
+                    return itens[i];
+                }
+            }
+
+            return null;
         }
 
         private IEnumerator TetraminoFall()
@@ -96,27 +165,27 @@ namespace TetrisMechanic
         {
             if (!UnityEngine.Input.anyKeyDown && !UnityEngine.Input.GetKeyUp(KeyCode.DownArrow)) return;
 
-            if (m_DesktopInputType.VerifyInput() == InputMovement.Rotate)
+            if (m_IInputType.VerifyInput() == InputMovement.Rotate)
             {
                 Rotate();
             }
-            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveRight)
+            else if (m_IInputType.VerifyInput() == InputMovement.MoveRight)
             {
                 MoveRight();
             }
-            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveLeft)
+            else if (m_IInputType.VerifyInput() == InputMovement.MoveLeft)
             {
                 MoveLeft();
             }
-            else if (m_DesktopInputType.VerifyInput() == InputMovement.MoveFast)
+            else if (m_IInputType.VerifyInput() == InputMovement.MoveFast)
             {
                 _currentSpeed = fastSpeed;
             }
-            else if (m_DesktopInputType.VerifyInput() == InputMovement.NormalMovement)
+            else if (m_IInputType.VerifyInput() == InputMovement.NormalMovement)
             {
                 NormalMovement();
             }
-            else if (m_DesktopInputType.VerifyInput() == InputMovement.Skip)
+            else if (m_IInputType.VerifyInput() == InputMovement.Skip)
             {
                 Skip();
             }

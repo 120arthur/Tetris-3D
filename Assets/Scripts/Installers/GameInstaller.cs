@@ -1,5 +1,4 @@
 using Input;
-using Match;
 using Score;
 using TetrisMechanic;
 using Ui;
@@ -20,8 +19,12 @@ public class GameInstaller : MonoInstaller<GameInstaller>
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
-        Container.BindInterfacesAndSelfTo<DesktopInputType>().AsSingle();
-        Container.BindInterfacesAndSelfTo<MatchWords>().AsSingle();
+
+#if UNITY_STANDALONE
+        Container.Bind<IInputType>().To<DesktopInputType>().AsSingle();
+#else
+        Container.Bind<IInputType>().To<DesktopInputType>().AsSingle();
+#endif
 
         Container.BindInstance(m_TetraminoManager);
         Container.BindInstance(m_GameUi);

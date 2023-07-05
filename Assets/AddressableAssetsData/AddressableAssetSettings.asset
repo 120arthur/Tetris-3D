@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: a8591faeef39d0d4b846e118cf606bf2
   m_currentHash:
     serializedVersion: 2
-    Hash: bc27a35d5ed01d0c041de901219cf1c7
+    Hash: 5c3cab2ff5403c6c47b0ed0afbae394f
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Tetraminos
+    - CubeTypes
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 0fc5d1006902d6e43a44cd9be42cbadc, type: 2}
