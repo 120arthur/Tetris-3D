@@ -7,37 +7,49 @@ namespace TetrisMechanic
     /// </summary>
     public class TetraminoGrid : MonoBehaviour
     {
-        private readonly int _height;
-        private readonly int _width;
-        private readonly Transform[,] _grid;
+        private readonly int m_height;
+        private readonly int m_width;
+        private readonly GridPosInfo[,] m_grid;
 
-        public TetraminoGrid(int height, int width, Transform[,] grid)
+        public TetraminoGrid(int height, int width, GridPosInfo[,] grid)
         {
-            _height = height;
-            _width = width;
-            _grid = grid;
+            m_height = height;
+            m_width = width;
+            m_grid = grid;
         }
 
         /// <summary>
         // when the tetromino finishes the move, this method adds its position on the grid.
         /// </summary>
         /// <param name="tetramino"></param>
-        public void AddTetrisToPositionList(Transform tetramino)
+        public void AddTetrisToPositionList(TetraminoCube[] tetraminoCubes)
         {
-            foreach (Transform children in tetramino)
+            foreach (TetraminoCube cube in tetraminoCubes)
             {
-                var position = children.transform.position;
-                _grid[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y)] = children;
+                Vector3 position = cube.transform.position;
+
+                int posX = Mathf.RoundToInt(position.x);
+                int posY = Mathf.RoundToInt(position.y);
+                
+                if (m_grid[posX, posY] == null)
+                {
+                    m_grid[posX, posY] = new GridPosInfo();
+                }
+
+                m_grid[posX, posY].SetNewTetris(cube.transform, cube.ID);
             }
         }
 
         public void Remove(int lineToRemove)
         {
-            for (var column = 0; column < _width; column++)
+            for (var column = 0; column < m_width; column++)
             {
-                if (!_grid[column, lineToRemove]) continue;
-                Destroy(_grid[column, lineToRemove].gameObject);
-                _grid[column, lineToRemove] = null;
+                if (m_grid[column, lineToRemove].HasCube() == false)
+                {
+                    continue;
+                }
+                Destroy(m_grid[column, lineToRemove].TetraminoTransform.gameObject);
+                m_grid[column, lineToRemove].RemoveTetris();
             }
         }
 
@@ -47,14 +59,14 @@ namespace TetrisMechanic
         /// <param name="deletedLine"></param>
         public void UpdateBlockLinesDown(int deletedLine)
         {
-            for (var line = deletedLine; line < _height; line++)
+            for (var line = deletedLine; line < m_height; line++)
             {
-                for (var column = 0; column < _width; column++)
+                for (var column = 0; column < m_width; column++)
                 {
-                    if (_grid[column, line] == null) continue;
-                    _grid[column, line - 1] = _grid[column, line];
-                    _grid[column, line] = null;
-                    _grid[column, line - 1].transform.position -= new Vector3(0, 1, 0);
+                    if (m_grid[column, line] == null || m_grid[column, line].HasCube() == false) continue;
+                    m_grid[column, line - 1].SetNewTetris(m_grid[column, line].TetraminoTransform, m_grid[column, line].TetraminoId);
+                    m_grid[column, line].RemoveTetris();
+                    m_grid[column, line - 1].TetraminoTransform.position = Vector3.down;
                 }
             }
         }
