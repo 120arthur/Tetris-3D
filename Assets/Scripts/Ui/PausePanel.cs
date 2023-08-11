@@ -7,24 +7,24 @@ namespace Ui
     public class PausePanel : Ui
     {
         [Inject]
-        private ControllerManager m_ControllerManager;
+        private IGameStateManager m_controllerManager;
         [Inject]
-        private GameUi m_GameUi;
+        private IGameUI m_gameUi;
 
-        [SerializeField] private Button continueButton;
-        [SerializeField] private Button menuButton;
-        [SerializeField] private Button replayButton;
+        [SerializeField] private Button m_continueButton;
+        [SerializeField] private Button m_menuButton;
+        [SerializeField] private Button m_replayButton;
 
         private void Awake()
         {
-            continueButton.onClick.AddListener(() => { m_GameUi.PauseOut(); });
+            m_continueButton.onClick.AddListener(m_gameUi.PauseOut);
 
-            menuButton.onClick.AddListener(() => { m_ControllerManager.LoadMenu(); });
+            m_menuButton.onClick.AddListener(() => m_controllerManager.ChangeState(GameState.BACKTOMENU));
 
-            replayButton.onClick.AddListener(() =>
+            m_replayButton.onClick.AddListener(() =>
                                              {
-                                                 m_ControllerManager.Replay();
-                                                 m_GameUi.PauseOut();
+                                                 m_controllerManager.ChangeState(GameState.REPLAY);
+                                                 m_gameUi.PauseOut();
                                              });
         }
     }

@@ -600,9 +600,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf14ab2151d6dfb45830467f0267d870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fastSpeed: 0.1
-  normalSpeed: 0.5
-  m_TetraminoCubes:
+  m_fastSpeed: 20
+  m_normalSpeed: 10
+  m_tetraminoCubes:
   - {fileID: 119583734235938172}
   - {fileID: 3265488165901256474}
   - {fileID: 5035245894001683307}

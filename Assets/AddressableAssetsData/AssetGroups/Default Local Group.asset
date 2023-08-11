@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: a8591faeef39d0d4b846e118cf606bf2
   m_SerializeEntries:
-  - m_GUID: 9bc41f62be4b0d8469574479c207992e
-    m_Address: TetraminoSpawner
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a90e70bed1bffb245b6d3c8958afbdea
     m_Address: NORMAL
     m_ReadOnly: 0

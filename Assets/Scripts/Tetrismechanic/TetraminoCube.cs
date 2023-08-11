@@ -1,12 +1,6 @@
+using System;
+using TetrisMechanic;
 using UnityEngine;
-
-public enum TetraminoCubeType
-{
-    NORMAL,
-    ANGRY,
-    BORED,
-    ENERGY
-}
 
 public class TetraminoCube : MonoBehaviour
 {
@@ -14,6 +8,9 @@ public class TetraminoCube : MonoBehaviour
     private Material m_Material;
     [SerializeField]
     private TetraminoCubeType m_TetraminoCubeType;
+    private Guid m_id;
+
+    public Guid ID => m_id;
 
     public TetraminoCubeType TetraminoCubeType => m_TetraminoCubeType;
     public Material Material => m_Material;
@@ -28,5 +25,10 @@ public class TetraminoCube : MonoBehaviour
             Renderer renderer = GetComponentInChildren<Renderer>();
             renderer.material = m_Material;
         }
+    }
+
+    public void SetId(Guid id)
+    {
+        m_id = id; 
     }
 }

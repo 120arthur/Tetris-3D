@@ -4,35 +4,35 @@ namespace Input
 {
     public class DesktopInputType : IInputType
     {
-        public InputMovement VerifyInput()
+        public MovementType VerifyInput()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.UpArrow))
             {
-                return InputMovement.Rotate;
+                return MovementType.ROTATE;
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                return InputMovement.MoveLeft;
+                return MovementType.MOVE_LEFT;
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
             {
-                return InputMovement.MoveRight;
+                return MovementType.MOVE_RIGHT;
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.DownArrow))
             {
-                return InputMovement.MoveFast;
+                return MovementType.MOVE_FAST;
             }
             else if (UnityEngine.Input.GetKeyUp(KeyCode.DownArrow))
             {
-                return InputMovement.NormalMovement;
+                return MovementType.NORMAL_MOVEMENT;
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                return InputMovement.Skip;
+                return MovementType.SKIP;
             }
             else
             {
-                return InputMovement.Empty;
+                return MovementType.EMPTY;
             }
         }
     }

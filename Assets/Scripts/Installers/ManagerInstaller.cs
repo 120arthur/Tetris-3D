@@ -5,14 +5,17 @@ using Zenject;
 public class ManagerInstaller : MonoInstaller<ManagerInstaller>
 {
     [SerializeField]
-    private GameManager m_GameManager;
+    private GameManager m_gameManager;
     [SerializeField]
-    private SoundController m_SoundController;
+    private SoundController m_soundController;
     public override void InstallBindings()
     {
         SignalBusInstaller.Install(Container);
 
-        Container.BindInstance(m_GameManager);
-        Container.BindInstance(m_SoundController);
+        IGameManager iGameManagerInstance = m_gameManager;
+        Container.Bind<IGameManager>().FromInstance(iGameManagerInstance).AsSingle();
+
+        ISoundController iSoundControllerInstance = m_soundController;
+        Container.Bind<ISoundController>().FromInstance(iSoundControllerInstance).AsSingle();
     }
 }

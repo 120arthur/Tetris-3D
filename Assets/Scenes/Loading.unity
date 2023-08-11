@@ -449,8 +449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510672ee9498d3c4dabbd5c810047e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LoadingSlider: {fileID: 1676023988}
-  m_LoadingText: {fileID: 250012262}
+  m_loadingSlider: {fileID: 1676023988}
+  m_loadingText: {fileID: 250012262}
 --- !u!1 &622388709
 GameObject:
   m_ObjectHideFlags: 0

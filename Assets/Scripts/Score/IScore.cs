@@ -3,7 +3,7 @@
     public interface IScore
     {
         public void AddPoints();
-        public int CurrentPoints();
+        public int GetCurrentPoints();
         public void RemovePoints();
         public void RewardPoints();
 

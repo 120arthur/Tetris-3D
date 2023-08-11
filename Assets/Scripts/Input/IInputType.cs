@@ -5,6 +5,6 @@
      /// Receives the input formula.
      /// </summary>
      /// <returns></returns>
-        InputMovement VerifyInput();
+        MovementType VerifyInput();
     }
 }

@@ -8,28 +8,29 @@ using Zenject;
 public class GameInstaller : MonoInstaller<GameInstaller>
 {
     [SerializeField]
-    private GameUi m_GameUi;
+    private GameScreen m_gameUi;
     [SerializeField]
-    private ControllerManager m_ControllerManager;
-    [SerializeField]
-    private TetraminoSpawner m_TetraminoSpawner;
-    [SerializeField]
-    private TetraminoManager m_TetraminoManager;
+    private TetraminoSpawner m_tetraminoSpawner;
 
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
+        Container.DeclareSignal<OnTetratiminoFinishMovementSignal>();
+        Container.DeclareSignal<OnGameEndSignal>();
+
+        Container.Bind<IGameStateManager>().To<GameStateManager>().AsSingle();
+        Container.Bind<ITetraminoController>().To<TetraminoController>().AsSingle();
+
+        Container.Bind<IScore>().To<ScoreManager>().AsSingle();
 
 #if UNITY_STANDALONE
         Container.Bind<IInputType>().To<DesktopInputType>().AsSingle();
 #else
         Container.Bind<IInputType>().To<DesktopInputType>().AsSingle();
 #endif
+        IGameUI iGameUiInstance = m_gameUi;
+        Container.Bind<IGameUI>().FromInstance(iGameUiInstance).AsSingle();
 
-        Container.BindInstance(m_TetraminoManager);
-        Container.BindInstance(m_GameUi);
-        Container.BindInstance(m_ControllerManager);
-        Container.BindInstance(m_TetraminoSpawner);
-        //Container.DeclareSignal<OnCubeMove>().OptionalSubscriber();
+        ITetraminoSpawner iTetraminoSpawnerInstance = m_tetraminoSpawner;
+        Container.Bind<ITetraminoSpawner>().FromInstance(iTetraminoSpawnerInstance).AsSingle();
     }
 }

@@ -485,6 +485,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5868430935770432415, guid: 142f1f588d3610945b542523f55653b1, type: 3}
+      propertyPath: m_startButton
+      value: 
+      objectReference: {fileID: 5868430936280074546}
+    - target: {fileID: 5868430937681528633, guid: 142f1f588d3610945b542523f55653b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5868430937681528633, guid: 142f1f588d3610945b542523f55653b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Game
@@ -494,6 +502,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 142f1f588d3610945b542523f55653b1, type: 3}
+--- !u!114 &5868430936280074546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5868430937681528633, guid: 142f1f588d3610945b542523f55653b1, type: 3}
+  m_PrefabInstance: {fileID: 5868430936280074545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7004645726407742718
 PrefabInstance:
   m_ObjectHideFlags: 0

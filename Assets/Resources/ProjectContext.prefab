@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766ceb6adaf63e84ca0bbbcbcc472fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GameManager: {fileID: 3940247945066856835}
-  m_SoundController: {fileID: 2648825222610767591}
+  m_gameManager: {fileID: 3940247945066856835}
+  m_soundController: {fileID: 2648825222610767591}
 --- !u!1 &1930033891782542626
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2a439016c7f6b45b38e2897ac65bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NextSxene: Menu
 --- !u!1001 &4809290050321805055
 PrefabInstance:
   m_ObjectHideFlags: 0

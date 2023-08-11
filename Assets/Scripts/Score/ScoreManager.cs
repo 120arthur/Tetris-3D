@@ -2,14 +2,14 @@ namespace Score
 {
     public class ScoreManager : IScore
     {
-        private int _totalScore;
+        private int m_totalScore;
 
-        public void AddPoints() => _totalScore += 100;
+        public void AddPoints() => m_totalScore += 100;
 
-        public void RewardPoints() => _totalScore += 1000;
-        public void RemovePoints() => _totalScore = 0;
+        public void RewardPoints() => m_totalScore += 1000;
+        public void RemovePoints() => m_totalScore = 0;
 
-        public int CurrentPoints() => _totalScore;
+        public int GetCurrentPoints() => m_totalScore;
 
     }
 }

@@ -8,29 +8,30 @@ namespace Ui
     public class GameOverPanel : Ui
     {
         [Inject]
-        private ControllerManager m_ControllerManager;
+        private IGameStateManager m_controllerManager;
         [Inject]
-        private ScoreManager m_ScoreManager;
+        private IScore m_iScore;
         [Inject]
-        private GameUi m_GameUi;
+        private IGameUI m_gameUi;
 
-        [SerializeField] private Text totalScore;
-        [SerializeField] private Button menuButton;
-        [SerializeField] private Button replayButton;
+        [SerializeField] private Text m_totalScore;
+        [SerializeField] private Button m_menuButton;
+        [SerializeField] private Button m_replayButton;
 
         private void Awake()
         {
-            menuButton.onClick.AddListener(() => { m_ControllerManager.LoadMenu(); });
+            m_menuButton.onClick.AddListener(() => m_controllerManager.ChangeState(GameState.BACKTOMENU));
 
-            replayButton.onClick.AddListener(() =>
+            m_replayButton.onClick.AddListener(() =>
                                              {
-                                                 m_ControllerManager.Replay();
-                                                 m_GameUi.GameOverPanelOut();
+                                                 m_controllerManager.ChangeState(GameState.REPLAY);
+                                                 m_gameUi.GameOverPanelOut();
                                              });
         }
+
         public void UpdateTotalScore()
         {
-            totalScore.text = m_ScoreManager.CurrentPoints().ToString();
+            m_totalScore.text = m_iScore.GetCurrentPoints().ToString();
         }
         
     }

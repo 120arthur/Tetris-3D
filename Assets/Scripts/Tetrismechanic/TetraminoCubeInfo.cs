@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TetrisMechanic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "TetraminoCube", menuName = "ScriptableObjects/CubeInfo", order = 1)]
 

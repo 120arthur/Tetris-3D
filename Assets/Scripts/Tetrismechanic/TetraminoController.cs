@@ -4,20 +4,19 @@ using Zenject;
 using Score;
 using Ui;
 using System;
-using Input;
 
 namespace TetrisMechanic
 {
-    public class TetraminoController
+    public class TetraminoController : ITetraminoController
     {
         [Inject]
-        private SoundController m_soundController;
+        private ISoundController m_soundController;
         [Inject]
-        private GameUi m_gameUi;
+        private IGameUI m_gameUi;
         [Inject]
-        private ControllerManager m_controllerManager;
+        private IGameStateManager m_gameStateManager;
         [Inject]
-        private TetraminoSpawner m_tetraminoSpawner;
+        private ITetraminoSpawner m_tetraminoSpawner;
         [Inject]
         private IScore m_iScore;
         [Inject]
@@ -41,7 +40,7 @@ namespace TetrisMechanic
             m_tetraminoGrid = new TetraminoGrid(m_height, m_width, m_grid);
         }
 
-        public bool ThisPositionIsValid(TetraminoCube[] m_tetraminoCubes, MovementType movementType)
+        public bool ThisPositionIsValid(TetraminoCube[] m_tetraminoCubes)
         {
             foreach (TetraminoCube cube in m_tetraminoCubes)
             {
@@ -72,7 +71,7 @@ namespace TetrisMechanic
             m_tetraminoGrid.AddTetrisToPositionList(args.m_tetraminoCubes);
             IsInBound(args.m_tetraminoCubes);
 
-            if (m_controllerManager.m_gameIsOver) return;
+            if (m_gameStateManager.GameIsOver()) return;
 
             m_tetraminoSpawner.SpawnTetris();
             m_soundController.ChangeSfx(1);
@@ -115,7 +114,7 @@ namespace TetrisMechanic
             {
                 if (Mathf.RoundToInt(cube.transform.position.y) >= m_upperBound)
                 {
-                    m_controllerManager.EndGame();
+                    m_gameStateManager.ChangeState(GameState.GAMEOVER);
                     return;
                 }
             }
@@ -159,6 +158,6 @@ public class GridPosInfo
 
     public bool HasCube()
     {
-        return m_tetraminoTransform != null && m_tetraminoId != Guid.Empty ? true : false;
+        return m_tetraminoTransform != null && m_tetraminoId != Guid.Empty;
     }
 }

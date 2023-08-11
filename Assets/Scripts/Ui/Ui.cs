@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Ui
@@ -9,22 +10,30 @@ namespace Ui
     /// </summary>
     public class Ui : MonoBehaviour
     {
+        private const string GAME_SCENE_NAME = "Game";
+        
         [Inject]
-        private GameManager m_GameManager;
+        private IGameManager m_gameManager;
 
-        // This method are called in on the ui buttons.
-        public void ChangeScene(string sceneName)
+        [SerializeField]
+        private Button m_startButton;
+
+        private void Start()
         {
-            m_GameManager.m_NextSxene = sceneName;
-            Addressables.LoadSceneAsync("Loading", activateOnLoad: true);
+            m_startButton.onClick.AddListener(ChangeToGameScene);
         }
 
-        protected static void TurnOnUi(GameObject uiObject)
+        private void ChangeToGameScene()
+        {
+            m_gameManager.ChangeScene(GAME_SCENE_NAME);
+        }
+
+        protected void TurnOnUi(GameObject uiObject)
         {
             uiObject.SetActive(true);
         }
 
-        protected static void TurnOffUi(GameObject uiObject)
+        protected void TurnOffUi(GameObject uiObject)
         {
             uiObject.SetActive(false);
         }
